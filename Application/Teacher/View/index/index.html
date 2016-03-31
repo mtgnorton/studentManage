@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="__JQUERY__/jquery-2.1.1.js"></script>
+    <script src="__JQUERY__/jquery-2.1.1.min.js"></script>
+    <script src="__PUB__/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" href="__PUB__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUB__/sm/sm.css">
+    <link rel="stylesheet" href="__PUB__/leftsp/css/style.css" media="screen" type="text/css" />
+	<title>Document</title>
+	<script src="__PUB__/sm/sm.js"> </script>	
+  	<script src="__PUB__/leftsp/js/index.js"></script>
+
+</head>
+<body>
+<div class="container">
+
+<input type="hidden"  id="insert_announce" value="{:U('Teacher/Index/insert_announce')}">
+
+ <include file="public/header" />
+
+
+<div style="text-align:center;clear:both">
+</div>
+<table class="table table-bordered">
+  <thead>
+      <tr class="warning">
+         <th>课程</th>
+         <th>班级</th>
+         
+      </tr>
+   </thead>
+   <tbody>
+
+<volist name="course" id="value" key="key" >
+ <tr>
+<td >
+	<a href="{:U('Teacher/Course/index',array('course'=>$value['course']))}">
+  	<button type="button" class="{$value['color']}">
+	{$value['course']}
+	</button>
+	<!--  <span class="badge">
+	 50
+	 </span> -->
+	 </a>
+</td>	
+ 
+<td align="center">
+	 <volist name="class_data[$value['course']]" id="class" key="key">
+	 <a href="{:U('Teacher/Class/index',array('class'=>$class,'course'=>$value['course']))}">
+	 <button type="button" class="btn btn-default">
+	{$class}
+	</button>
+	</a>
+	 </volist>
+	 </td>
+	</tr>
+</volist>
+ </tbody>
+</table>
+</div>
+ 
+	
+</body>
+</html>

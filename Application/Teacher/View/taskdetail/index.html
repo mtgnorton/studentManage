@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="__JQUERY__/jquery-2.1.1.js"></script>
+    <script src="__JQUERY__/jquery-2.1.1.min.js"></script>
+    <script src="__PUB__/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" href="__PUB__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUB__/sm/sm.css">
+	<title>Document</title>
+	<script src="__PUB__/sm/sm.js"> </script>
+</head>
+<body>
+<div class="container">
+<input type="hidden"  id="insert_announce" value="{:U('Teacher/Index/insert_announce')}">
+
+ <include file="public/header" />
+ <div align="center"><font size="5"><strong>{$course} 作业详情</strong> </font></div>
+
+<table class="table table-bordered">
+   <caption>近期作业情况统计</caption>
+   <thead >
+      <tr class="warning" >
+         <th>提交时间</th>
+         <th>学生姓名</th>
+         <th>学生班级</th>
+         <th>查看内容</th>
+         <th>是否批改</th>
+      </tr>
+   </thead>
+   <tbody>
+   <volist name="task_data" id="value" key="key" >
+      <tr class="active">
+
+         <td> <font size="4">{:date('n-j H:i D',$value['submit_time'])} </font></td>
+         <td> <font size="4">{$value['sname']}</font></td>
+         <td><font size="4"> {$value['type']}</font> </td>
+         <td><font size="4"> 点击查看</font></td>
+         <if condition="$value['is_mark'] eq 0">
+         <td> <font size="4">未批改 </font></td>
+         <else />
+        <td> <font size="4">已修改 </font></td>
+      </if>
+       
+      </tr>
+    </volist>
+         </tbody>
+
+</table>
+
+</div>
+ 
+	
+</body>
+</html>

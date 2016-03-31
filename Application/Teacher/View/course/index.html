@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="__JQUERY__/jquery-2.1.1.js"></script>
+    <script src="__JQUERY__/jquery-2.1.1.min.js"></script>
+    <script src="__PUB__/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" href="__PUB__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUB__/sm/sm.css">
+	<title>Document</title>
+	<script src="__PUB__/sm/sm.js"> </script>
+</head>
+<body>
+<div class="container">
+<input type="hidden"  id="insert_announce" value="{:U('Teacher/Index/insert_announce')}">
+
+ <include file="public/header" />
+ <div align="center"><font size="5"><strong>{$course} </strong> <a href="{:U('Teacher/Course/send_work',array('course'=>$course))}">   发布作业</a></font></div>
+
+<table class="table table-bordered">
+   <caption>近期作业情况统计</caption>
+   <thead >
+      <tr class="warning" >
+         <th>时间</th>
+         <th>作业标题</th>
+         <th>作业类型</th>
+        <th>查看完成情况</th>
+         <th>总人数</th>
+         <th>完成人数</th>
+         <th >修改本次作业</th>
+      </tr>
+   </thead>
+   <tbody>
+   <volist name="recent_task" id="value" key="key" >
+      <tr class="active">
+
+         <td> <font size="4">{:date('n-j H:i D',$value['start_time'])} </font></td>
+         <td> <font size="4">{$value['title']}</font></td>
+         <td><font size="4"> {$value['type']}</font> </td>
+         <td><font size="4"> <a href="{:U('Teacher/taskdetail/index',array('id'=>$value['id']))}">点击查看</a></font></td>
+         <td> <font size="4">{$value['total_number']} </font></td>
+         <td> <font size="4">{$value['complete_number']}</font> </td>
+         <td align="center"> <a href="{:U('Teacher/Course/send_work',array('modify'=>1,'task_id'=>$value['id'],'course'=>$course))}"><button class="btn btn-default">修改</button></a></td>
+      </tr>
+    </volist>
+         </tbody>
+
+</table>
+
+</div>
+ 
+	
+</body>
+</html>

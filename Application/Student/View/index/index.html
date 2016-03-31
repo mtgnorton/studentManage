@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="__JQUERY__/jquery-2.1.1.js"></script>
+    <script src="__JQUERY__/jquery-2.1.1.min.js"></script>
+    <script src="__PUB__/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" href="__PUB__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUB__/sm/sm.css">
+	<script src="__PUB__/sm/sm.js"></script>
+    <script>$(function () 
+      { $("[data-toggle='popover']").popover();
+      });
+   </script>
+	<title>Document</title>
+</head>
+<body>
+<div class="container">
+ <include file="public/header" />
+<table class="table table-bordered">
+  <thead>
+      <tr class="warning">
+         <th>课程</th>
+         <th>老师姓名</th>
+         <th>是否有作业</th>
+      </tr>
+   </thead>
+   <tbody>
+<volist name="course_task_data" id="value" >
+
+  	 <tr>
+  	  <td>
+      <a href="{:U('Student/Course/index',array('course'=>$value['course'],'tname'=>$value['tname']))}">
+  	<button type="button" class="{$value['color']}">
+ 	{$value.course}
+	</button>
+  </a>
+     </td>
+         <td><font size="4"><strong>{$value.tname}</strong></font></td>
+         <if condition="$value.is_task eq 0">
+        <td><font size="4"><strong>无</strong></font></td>
+         <else />
+       <td><font size="4"><strong>有新作业</strong></font></td>
+     </if>
+     </tr>
+
+</volist>
+ </tbody>
+</table>
+</div>
+ 
+	
+</body>
+</html>

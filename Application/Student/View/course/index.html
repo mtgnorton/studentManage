@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="__JQUERY__/jquery-2.1.1.js"></script>
+    <script src="__JQUERY__/jquery-2.1.1.min.js"></script>
+    <script src="__PUB__/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+	<link rel="stylesheet" href="__PUB__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUB__/sm/sm.css">
+	<title>Document</title>
+	<script src="__PUB__/sm/sm.js"> </script>
+</head>
+<body>
+<div class="container">
+      
+
+ <include file="public/header" />
+
+   
+
+
+  <div align="center"><font size="5">{$course}  </font></div>
+ <table class="table">
+   <caption>近期作业情况统计</caption>
+   <thead>
+      <tr>
+         <th>时间</th>
+         <th>作业标题(点击查看作业)</th>
+         <th>作业类型</th>
+     
+         <th>是否已完成</th>
+         <th>老师回复</th>
+         <th>成绩查看</th>
+        
+      </tr>
+   </thead>
+   <tbody>
+<volist name="task_data" id="value" >
+<tr class="{$value['color']}">
+        <td> {:date('n-j H:i 周L',$value['start_time'])} </td>
+         <td> <a href="{:U('Student/task/index',array('task_id'=>$value['id']))}">{$value['title']}</a></td>
+         <td> {$value['type']} </td>
+         <if condition="$value['is_finish'] eq 1">
+         <td> <a href="{:U('Student/task/index',array('s_task_id'=>$value['s_task_id'],'task_id'=>$value['id']))}">已完成-点击修改</a></td>
+        <else />
+         <td>未完成</td>
+        </if>
+         <td>查看</td>
+         <td>查看</td>
+  </tr>  
+</volist>
+</tbody>
+</table>
+</div>
+ 
+	
+</body>
+</html>

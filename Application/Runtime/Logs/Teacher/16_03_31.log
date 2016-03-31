@@ -1,0 +1,45 @@
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/dist/css/sb-admin-2.css
+ERR: 无法加载控制器:Dist
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/bower_components/bootstrap/dist/css/bootstrap.min.css
+ERR: 无法加载控制器:Bower_components
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/bower_components/metisMenu/dist/metisMenu.min.css
+ERR: 无法加载控制器:Bower_components
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/bower_components/metisMenu/dist/metisMenu.min.js
+ERR: 无法加载控制器:Bower_components
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/bower_components/bootstrap/dist/js/bootstrap.min.js
+ERR: 无法加载控制器:Bower_components
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/dist/js/sb-admin-2.js
+ERR: 无法加载控制器:Dist
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/bower_components/jquery/dist/jquery.min.js
+ERR: 无法加载控制器:Bower_components
+
+[ 2016-03-31T13:39:51+08:00 ] ::1 /studentMange/index.php/Teacher/bower_components/font-awesome/css/font-awesome.min.css
+ERR: 无法加载控制器:Bower_components
+
+[ 2016-03-31T13:41:43+08:00 ] ::1 /studentMange/index.php/Teacher/Index/index.html
+ERR: 非法操作:index.html
+
+[ 2016-03-31T13:41:47+08:00 ] ::1 /studentMange/index.php/Teacher/Index/tables.html
+ERR: 非法操作:tables.html
+
+[ 2016-03-31T13:41:50+08:00 ] ::1 /studentMange/index.php/Teacher/Index/forms.html
+ERR: 非法操作:forms.html
+
+[ 2016-03-31T13:42:51+08:00 ] ::1 /studentMange/index.php/Teacher/Index/index.html
+ERR: 非法操作:index.html
+
+[ 2016-03-31T13:45:23+08:00 ] ::1 /studentMange/index.php/Teacher/Index/index.html
+ERR: 非法操作:index.html
+
+[ 2016-03-31T13:46:37+08:00 ] ::1 /studentMange/index.php/Teacher/Index/index.html
+ERR: 非法操作:index.html
+
+[ 2016-03-31T13:57:37+08:00 ] ::1 /studentMange/index.php/Teacher/Index/login.html
+ERR: 非法操作:login.html
+
