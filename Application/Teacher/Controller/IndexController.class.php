@@ -26,21 +26,16 @@ class IndexController extends Controller
 			$this->error('请先登录',U('Student/login/index'),3);
 		}
 		$this->assign('name',	session('tname')."老师");
-		$t_course 			=  session('t_course');
-		$color 				= array('btn btn-primary','btn btn-success','btn btn-info','btn btn-warning','btn btn-danger');
-		$i 					= 0;
+		$t_course 				=  session('t_course');
 
 		foreach ($t_course as $key => $value) {
 
 		$te_course[$key]['course'] 	= $value;
 		$te_course[$key]['color'] 	= $color[$i];
-		$i++;
-		if ($i 	== 5) {
-			$i 	= 0;
-		}
 		}
 		
 		$this->assign('course',$te_course);
+	
 		/*
 		 *此处的作用是：
 		 *获得老师首页下每个课程对应的班级
@@ -48,7 +43,7 @@ class IndexController extends Controller
 		 */
 		$student_info		= 	get_class_student(session('t_course'));
     	$this->assign('class_data',	$student_info['class_data']);
-
+    	
     	/*
     	 *此处的作用是：
     	 *获得老师对应的公告
@@ -85,11 +80,9 @@ class IndexController extends Controller
 
 	public function logout($value='')
 	{
-		if ( I('post.logout') ) {
+		if ( I('get.logout') ) {
 		session(null);
-		$response['flag']=1;
-		$response['message']='您已经成功退出';
-		$this->ajaxReturn($response,0);
+		$this->redirect('Student/login/index',array(), 1, '页面跳转中...');
 		}
 	}
 	public function test($value='')

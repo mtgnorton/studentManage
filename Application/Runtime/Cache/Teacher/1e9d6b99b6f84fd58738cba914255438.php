@@ -1,108 +1,265 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<script src="/studentMange/Public/jquery/jquery-2.1.1.js"></script>
-    <script src="/studentMange/Public/jquery/jquery-2.1.1.min.js"></script>
-    <script src="/studentMange/Public/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
-	<link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
-	<link rel="stylesheet" href="/studentMange/Public/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/studentMange/Public/sm/sm.css">
-	<title>Document</title>
-	<script src="/studentMange/Public/sm/sm.js"> </script>
-</head>
-<body>
-<div class="container">
-<input type="hidden"  id="insert_announce" value="<?php echo U('Teacher/Index/insert_announce');?>">
 
- <div class="row clearfix" id="header">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-          
-            <div class="col-md-12 column">
-                <h1 id='threed' class="text-center" style="">
-                
-              <a href="<?php echo U('Teacher/Index/index');?>"><img src="/studentMange/Public/picture/logo.png" href="" alt=""></a> 
-            
-                    </h1>
-                <div >
-                <?php if($announce == 1): else: ?>
-                    <div style="float:left">
-                  <button type="button" class="btn btn-danger" onclick="announce()">发布公告</button>
-                  <div style="max-width:300px"><font size='5'><span id="announce_dis"><?php echo ($announcement); ?></span></font> </div>
-                    </div><?php endif; ?>
-                </div>
+    <title>学习助手</title>
 
-              <!--   <ul class="nav nav-pills" style="margin-left:80px">
-                    <li class="active">
-                        <a href="<?php echo U('Home/Manage');?>"> <span class="badge pull-right"></span>个人中心</a>
-                    </li>
-                    <li class="active" id="showLeft">
-                        <a href="#"> <span class="badge pull-right" id="cart_value"><?php echo ($sum); ?></span> 购物车</a>
+    <!-- Bootstrap Core CSS -->
+    <link href="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-                    </li>
-                       <?php if($coin == 'coin' ): else: ?>
-                          <li class="active">
-                        <a href="#"> <span class="badge pull-right" id="now_coin"><?php echo ($coin); ?></span> coin:</a>
+    <!-- MetisMenu CSS -->
+    <link href="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
-                    </li><?php endif; ?>
-                </ul> -->
-              
-                <blockquote class="pull-right">
-                <?php if($username == 1 ): ?><div>
+    <!-- DataTables CSS -->
+    <link href="/studentMange/Public/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+  <!--   <link href="/studentMange/Public/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
+
+    <!-- Custom CSS -->
+       <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
+    <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+    <script src="/studentMange/Public/sm/sm.js"></script>
+    <!-- Custom Fonts -->
+   <!--  <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+ -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
    
-    </div>
-    <?php else: ?> 
-    <div>
-      <button type="button" class="btn btn-success" id="login">欢迎您<?php echo ($name); ?>
-       <button type="button" class="btn btn-warning" id="register" onclick="send_logout()">登出</button>
+
+</head>
+
+<style>
+    td{
+        max-width:150px;
+    }
+</style>
+<body>
+   <div id="wrapper">
      
-      </button>
-    </div><?php endif; ?>
-                    <p>
-                       O ever youthful,O ever weeping.
-                    </p> <small>杰克·凯鲁亚克 <cite>达摩流浪者</cite></small>
-                </blockquote>
-            </div>
-        </div>
-        <div><input type="hidden" id="send_logout" value="<?php echo U('Teacher/index/logout');?>">
-        <input type="hidden" id="login_page" value="<?php echo U('Student/login/index');?>">
-        </div>
-
-     
-     
- <div align="center"><font size="5"><strong><?php echo ($course); ?> </strong> <a href="<?php echo U('Teacher/Course/send_work',array('course'=>$course));?>">   发布作业</a></font></div>
-
-<table class="table table-bordered">
-   <caption>近期作业情况统计</caption>
-   <thead >
-      <tr class="warning" >
-         <th>时间</th>
-         <th>作业标题</th>
-         <th>作业类型</th>
-        <th>查看完成情况</th>
-         <th>总人数</th>
-         <th>完成人数</th>
-         <th >修改本次作业</th>
-      </tr>
-   </thead>
-   <tbody>
-   <?php if(is_array($recent_task)): $key = 0; $__LIST__ = $recent_task;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><tr class="active">
-
-         <td> <font size="4"><?php echo date('n-j H:i D',$value['start_time']);?> </font></td>
-         <td> <font size="4"><?php echo ($value['title']); ?></font></td>
-         <td><font size="4"> <?php echo ($value['type']); ?></font> </td>
-         <td><font size="4"> <a href="<?php echo U('Teacher/taskdetail/index',array('id'=>$value['id']));?>">点击查看</a></font></td>
-         <td> <font size="4"><?php echo ($value['total_number']); ?> </font></td>
-         <td> <font size="4"><?php echo ($value['complete_number']); ?></font> </td>
-         <td align="center"> <a href="<?php echo U('Teacher/Course/send_work',array('modify'=>1,'task_id'=>$value['id'],'course'=>$course));?>"><button class="btn btn-default">修改</button></a></td>
-      </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-         </tbody>
-
-</table>
-
-</div>
  
-	
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">学习助手</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+              
+                <!-- /.dropdown -->
+          
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>              
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>查看所有作业</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 欢迎您<?php echo ($name); ?></a>
+                        </li>
+                       
+                        <li class="divider"></li>
+                        <li><a href="<?php echo U('Teacher/index/logout',array('logout'=>1));?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                   <?php if(is_array($course)): $key = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><li>
+                            <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
+                                </li>
+                                  <li>
+                                  <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
+                                </li>
+                                  <li>
+                                    <a href="<?php echo U('Teacher/Course/send_work',array('course'=>$value['course']));?>">发布作业</a>
+                                </li>
+                                  <li>
+                                    <a href="<?php echo U('Teacher/Class/index',array('course'=>$value['course']));?>">班级查看</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li><?php endforeach; endif; else: echo "" ;endif; ?>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <input type="hidden" id="announce_path" value="<?php echo U('Teacher/course/insert_announce');?>">
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <?php echo ($now_course); ?>->近期作业统计
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                        <th><span class="label label-info">时间</span></th>
+                                     <th><span class="label label-info">作业标题</span></th>
+                                     <th><span class="label label-info">作业类型</span></th>
+                                    <th><span class="label label-info">完成情况</span></th>
+                                     <th><span class="label label-info">总人数</span></th>
+                                     <th><span class="label label-info">完成人数</span></th>
+                                     <th ><span class="label label-info">修改本次作业</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       <?php if(is_array($recent_task)): $key = 0; $__LIST__ = $recent_task;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><tr class="odd gradeX">
+                                            <td><?php echo date('n-j H:i D',$value['start_time']);?></td>
+                                            <td><?php echo ($value['title']); ?></td>
+                                            <td><?php echo ($value['type']); ?></td>
+                                            <td class="center"><a href="<?php echo U('Teacher/taskdetail/index',array('id'=>$value['id'],'course'=>$now_course));?>"><button type="button" class="btn btn-outline btn-success">点击查看</button></a></td>
+                                            <td class="center"><?php echo ($value['total_number']); ?></td>
+                                            <td><?php echo ($value['complete_number']); ?></td>
+                                            <td><a href="<?php echo U('Teacher/Course/send_work',array('modify'=>1,'task_id'=>$value['id'],'course'=>$value['course']));?>"> <button type="button" class="btn btn-outline btn-info">修改</button></a></td>
+                                        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+                                   
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                          
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+
+
+        <!-- Navigation -->
+      
+
+     
+            <!-- /.row -->
+         
+            <!-- /.row -->
+          
+            <!-- /.row -->
+        
+                <!-- /.col-lg-6 -->
+                
+            <!-- /.row -->
+          
+                <!-- /.col-lg-6 -->
+               
+  
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/studentMange/Public/startbootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/studentMange/Public/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
+     //    var html = $('*').html();
+     // html.replace('Show','显示');
+     // $('*').html(html);
+    });
+
+    </script>
+
 </body>
+
 </html>

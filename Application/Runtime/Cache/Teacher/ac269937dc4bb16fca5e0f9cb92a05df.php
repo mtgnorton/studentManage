@@ -20,21 +20,27 @@
     <!-- Custom CSS -->
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="/studentMange/Public/startbootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/studentMange/Public/startbootstrap/dist/js/sb-admin-2.js"></script>
+         <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
+        <script src="/studentMange/Public/sm/sm.js"></script>
+
 
 </head>
 
 <body>
-
-    <div id="wrapper">
+   <div id="wrapper">
+ 
+ 
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -87,7 +93,7 @@
                         </li>
                        
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?php echo U('Teacher/index/logout',array('logout'=>1));?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -114,11 +120,17 @@
                             <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">点击查看课程详情</a>
+                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
                                 </li>
-                             <?php if(is_array($class_data[$value['course']])): $key = 0; $__LIST__ = $class_data[$value['course']];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$class): $mod = ($key % 2 );++$key;?><li>
-                                    <a href="<?php echo U('Teacher/Class/index',array('class'=>$class,'course'=>$value['course']));?>">班级：<?php echo ($class); ?></a>
-                                </li><?php endforeach; endif; else: echo "" ;endif; ?>
+                                  <li>
+                                  <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
+                                </li>
+                                  <li>
+                                    <a href="<?php echo U('Teacher/Course/send_work',array('course'=>$value['course']));?>">发布作业</a>
+                                </li>
+                                  <li>
+                                    <a href="<?php echo U('Teacher/Class/index',array('course'=>$value['course']));?>">班级查看</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -128,6 +140,7 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        <input type="hidden" id="announce_path" value="<?php echo U('Teacher/course/insert_announce');?>">
 
         <!-- Page Content -->
         <div id="page-wrapper">
@@ -148,16 +161,7 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="/studentMange/Public/startbootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/studentMange/Public/startbootstrap/dist/js/sb-admin-2.js"></script>
 
 </body>
 

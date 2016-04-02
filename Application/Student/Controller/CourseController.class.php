@@ -13,13 +13,40 @@ class CourseController extends Controller {
 
     public function index($course='',$tname='')
     {
-    	if (empty(session('sid'))) {
+    	   
+        if (empty(session('sid'))) {
 
-		$this->error('请先登录',U('Student/login'),3);
-		}
-		
+        $this->error('请先登录',U('Student/login'),3);
+        }
+        $this->assign('name',session('sname')."同学");
+        $this->assign('course',$course);
+        $now_course          = $course;
+        
+        /*
+         *此处的作用是：
+         *将学生的课程信息对应的老师信息和是否有作业，传递到首页
+         *
+         */
+        
+        $course             = session('s_course');
 
-    	$task_data		 = get_task_info($course,$tname);
+        $taskModel          = M('ttask');
+        foreach ($course as $key => $value) {
+        $is_suc         = $taskModel->where("course='$key' AND tname='$value'")->find();
+        if ($is_suc) {
+
+        $course_task_data[] = array('course'=>$key,'tname'=>$value,'is_task'=>1);
+        }else{
+
+        $course_task_data[] = array('course'=>$key,'tname'=>$value,'is_task'=>0);
+        }
+        }
+        
+        $this->assign('course_task_data',$course_task_data);
+        
+
+    	$task_data		 = get_task_info($now_course,$tname);
+
     	$staskModel 	 = M('stask');
     	$sid 			 = session('sid');
     	$color 			 = array('active','success','warning','danger');
@@ -54,7 +81,7 @@ class CourseController extends Controller {
 
     	$this->assign('name',session('sname')."同学");
     	$this->assign('task_data',$task_data);
-    	$this->assign('course',$course);
+        
     	$this->assign('is_announce',1);
     	$this->display();
     }

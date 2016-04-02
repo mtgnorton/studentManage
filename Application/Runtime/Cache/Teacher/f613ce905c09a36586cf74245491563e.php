@@ -1,18 +1,20 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
-<html lang="en">
-
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML>
+<html>
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>发布作业</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ 
+    <script type="text/javascript" src="/studentMange/Public/umeditor/third-party/jquery.min.js"></script>
 
-    <title>学习助手</title>
+        <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
+    <link rel="stylesheet" href="/studentMange/Public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/studentMange/Public/sm/sm.css">
+    <script src="/studentMange/Public/sm/sm.js"></script>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -20,9 +22,6 @@
     <!-- Custom CSS -->
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="/studentMange/Public/startbootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -32,17 +31,20 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/studentMange/Public/startbootstrap/dist/js/sb-admin-2.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
+    <script  type="text/javascript">
+
+   
+    
+    </script>
 
 </head>
-
 <body>
-   <div id="wrapper">
+
+
+
+ <div id="wrapper">
+
  
  
 
@@ -120,14 +122,21 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                  <?php if(is_array($course_task_data)): $i = 0; $__LIST__ = $course_task_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($i % 2 );++$i;?><li>
-                            <a href=""><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                   <?php if(is_array($course)): $key = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><li>
+                            <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                              
-                                  <li>
-                                    <a href="<?php echo U('Student/Course/index',array('course'=>$value['course'],'tname'=>$value['tname']));?>">展开详情</a>
+                               <li>
+                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
                                 </li>
-                           
+                                  <li>
+                                  <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
+                                </li>
+                                  <li>
+                                    <a href="<?php echo U('Teacher/Course/send_work',array('course'=>$value['course']));?>">发布作业</a>
+                                </li>
+                                  <li>
+                                    <a href="<?php echo U('Teacher/Class/index',array('course'=>$value['course']));?>">班级查看</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -137,28 +146,52 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        <input type="hidden" id="announce_path" value="<?php echo U('Teacher/course/insert_announce');?>">
 
         <!-- Page Content -->
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Blank</h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- /#page-wrapper -->
+        <div id="page-wrapper" style="">
+            <div class="container-fluid" >
+           <div style="">
+<!-- <button name="fanhui"  onclick="fanhui()">返回上一页</button> -->
+</div>
+   <div class="alert alert-warning" style="padding-bottom: 30px">
+                                <h3 align="center">   <?php echo ($now_course); ?>-<?php echo ($task_data["sname"]); ?></h3>
+                                <button style="float: right;">下一个学生</button>
+                            </div>
 
-    </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
+
+
+<div class="panel panel-danger">
+   <div class="panel-heading">
+      <h3 class="panel-title">
+         <strong>作业标题:</strong> <?php echo ($task_data['title']); ?> <span style="float: right;"> <strong>提交时间：</strong><?php echo date('n-j H:i 周L',$task_data['submit_time']);?></span>
+   </div>
+   <div class="panel-body">
+     <?php echo ($task_data['content']); ?>
+   </div>
+</div>
+
+
+
+<input type="hidden" name="modify_content" id="modify_content" value="<?php echo ($s_task_data['content']); ?>">
+<input type="hidden" id="send_task" value="<?php echo U('Student/task/send_task',array('task_id'=>$task_data['id'],'task_type'=>$task_data['type']));?>">
+
+<div class="form-group" align="center">
+ <label>请将您的批改情况填在下框</label>
+ <textarea class="form-control" rows="3" style="width: 30%">已批改</textarea>
+ <div class="form-group has-error">
+ <label class="control-label" for="inputError">请输入成绩</label>
+<input type="text" class="form-control" id="inputError" style="width: 30%">
+  </div>
+</div>
+<div align="center">
+   <?php if($modify == 1): ?><button name="send" onclick="send_task(<?php echo ($s_task_data['id']); ?>)">提交</button>
+    <?php else: ?>
+    <button name="send" onclick="send_task()">提交</button><?php endif; ?>
+</div>
+
 
 
 </body>
-
 </html>

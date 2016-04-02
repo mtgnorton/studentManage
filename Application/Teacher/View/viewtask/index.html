@@ -5,11 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>发布作业</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="__PUB__/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+ 
     <script type="text/javascript" src="__PUB__/umeditor/third-party/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="__PUB__/umeditor/umeditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="__PUB__/umeditor/umeditor.min.js"></script>
-    <script type="text/javascript" src="__PUB__/umeditor/lang/zh-cn/zh-cn.js"></script>
+
         <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
     <link rel="stylesheet" href="__PUB__/bootstrap/css/bootstrap.min.css">
@@ -24,9 +22,7 @@
     <!-- Custom CSS -->
     <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-  <!--   <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  -->
+
     <!-- Bootstrap Core JavaScript -->
     <script src="__PUB__/startbootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -57,8 +53,9 @@
            <div style="">
 <!-- <button name="fanhui"  onclick="fanhui()">返回上一页</button> -->
 </div>
-   <div class="alert alert-warning">
-                                <h3 align="center">   {$course}</h3>
+   <div class="alert alert-warning" style="padding-bottom: 30px">
+                                <h3 align="center">   {$now_course}-{$task_data.sname}</h3>
+                                <button style="float: right;">下一个学生</button>
                             </div>
 
 
@@ -67,7 +64,7 @@
 <div class="panel panel-danger">
    <div class="panel-heading">
       <h3 class="panel-title">
-         <strong>标题：</strong> {$task_data['title']} <span style="float: right;"> <strong>发布时间：</strong>{:date('n-j H:i 周L',$task_data['start_time'])}</span>
+         <strong>作业标题:</strong> {$task_data['title']} <span style="float: right;"> <strong>提交时间：</strong>{:date('n-j H:i 周L',$task_data['submit_time'])}</span>
    </div>
    <div class="panel-body">
      {$task_data['content']}
@@ -76,14 +73,17 @@
 
 
 
-<!--style给定宽度可以影响编辑器的最终宽度-->
-<script type="text/plain" id="myEditor" style="width:1000px;height:240px">
-   
-    <p id="default_c">将您要完成的作业写在这里</p>
-
-</script>
 <input type="hidden" name="modify_content" id="modify_content" value="{$s_task_data['content']}">
 <input type="hidden" id="send_task" value="{:U('Student/task/send_task',array('task_id'=>$task_data['id'],'task_type'=>$task_data['type']))}">
+
+<div class="form-group" align="center">
+ <label>请将您的批改情况填在下框</label>
+ <textarea class="form-control" rows="3" id="mark" style="width: 30%">已批改</textarea>
+ <div class="form-group has-error">
+ <label class="control-label" for="inputError">请输入成绩</label>
+<input type="text" class="form-control" id="score" style="width: 30%">
+  </div>
+</div>
 <div align="center">
    <if condition="$modify eq 1">
 
@@ -92,47 +92,8 @@
     <button name="send" onclick="send_task()">提交</button>
     </if>
 </div>
-<div class="clear"></div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
 
 
-<script type="text/javascript">
-    //实例化编辑器
-  
-    var um               = UM.getEditor('myEditor');
-    um.addListener('blur',function(){
-        $('#focush2').html('编辑器失去焦点了')
-    });
-    um.addListener('focus',function(){
-        $('#focush2').html('')
-    });
-      var modify         = {$modify};
-      var modify_content = $('#modify_content').val();
-    
-    if (modify           == 1) {
-
-      window.onload=function(){
-      setTimeout('init()',100);
-    }};
-      function init(){
-        $('#default_c').text('');    
-        um.execCommand('insertHtml', modify_content);
-    }
-
-    function insertHtml() {
-        var value = prompt('插入html代码', '');
-        um.execCommand('insertHtml', value)  
-    }
-   
-
- 
-</script>
 
 </body>
 </html>

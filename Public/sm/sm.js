@@ -13,33 +13,42 @@
     /*
      *此函数的作用是：
      *send_form和announce函数结合起来完成公告的发布和动态更新
-     *调用页面：view/index/index_teacher,此button在/public/header.html中
+     * 
      */
- 	function send_form(announce) {
+ 	function send_form(announce,course) {
+        // url     = del_suffix($('#announce_path').val())
+        // alert(url)
+        // alert(announce)
+        // alert(course)
         $.ajax({
             cache: true,
             type: "POST",
-            url: del_suffix($('#insert_announce').val()),
+            url: del_suffix($('#announce_path').val()),
             data: {
             announce :announce,	
-            }, // 你的formid
-            async: false,
+            course:course,
+            }, // 你的formi
             error: function(data) {
                 alert("Connection error");
             },
             success: function(response) {
             if (response.flag   ==    0) 
                     {
-                     alert(response.msg);
+                         
+                     sweetAlert(response.msg, "", "error");
+                     exit;
             }else{
-                     $("#announce_dis").text(announce);
+                     // $("#announce_dis").text(announce);
+                     
+                    
              }
              
             }
         });
 
     }
-	function announce(){
+	function send_announce(course){
+    
 		 swal({   
 		 title: "请输入公告!",  
 		 // text: "Write something interesting:",  
@@ -55,9 +64,12 @@
 		 swal.showInputError("您没有输入!"); 
 		  return false  
 		  }  
-		 send_form(inputValue);
-		 swal("已完成!", "您发布的公告为： " + inputValue, "success"); });
+		 response = send_form(inputValue,course);
 
+        swal("已完成!", "您发布的公告为： " + inputValue, "success");
+         
+		 
+ });
 		}
 
         /*
@@ -169,7 +181,6 @@
         });
 
     }
-    function fanhui(argument) {
-          url =    del_suffix($('#fanhui_path').val()) ;
-          window.location.href = url;  
-    }
+  function mark_task(argument) {
+      // body...
+  }

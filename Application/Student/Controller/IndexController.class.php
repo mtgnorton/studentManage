@@ -36,24 +36,20 @@ class IndexController extends Controller
 		
 		$course 			= session('s_course');
 		$taskModel 			= M('ttask');
-		$color 				= array('btn btn-primary','btn btn-success','btn btn-info','btn btn-warning','btn btn-danger');
-		$i 	= 0;
 		foreach ($course as $key => $value) {
 		$is_suc 		= $taskModel->where("course='$key' AND tname='$value'")->find();
 		if ($is_suc) {
 
-		$course_task_data[]	= array('course'=>$key,'tname'=>$value,'is_task'=>1,'color'=>$color[$i]);
+		$course_task_data[]	= array('course'=>$key,'tname'=>$value,'is_task'=>1);
 		}else{
 
-		$course_task_data[]	= array('course'=>$key,'tname'=>$value,'is_task'=>0,'color'=>$color[$i]);
-		}
-		$i++;
-		if ($i==5) {
-			$i=0;
+		$course_task_data[]	= array('course'=>$key,'tname'=>$value,'is_task'=>0);
 		}
 		}
 		
 		$this->assign('course_task_data',$course_task_data);
+		
+
 		$this->display();
 	}
 	public function FunctionName($value='')

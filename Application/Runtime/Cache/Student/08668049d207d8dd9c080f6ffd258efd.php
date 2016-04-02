@@ -69,10 +69,10 @@
                 <input type="password" name="password" class="password" placeholder="密码">
                           
                 <font color="red">教师:</font>
-                <input type="radio" checked="checked" name="identity" value="teacher" style="width:40px" /> 
+                <input type="radio" checked="checked" name="identity" value="teacher" style="width:20px" /> 
 
                 <font color="red">学生:</font> 
-                <input type="radio" name="identity" value="student" style="width:40px"/>
+                <input type="radio" name="identity" value="student" style="width:20px"/>
                 <input type="text" name="verify" value="请输入验证码" onfocus="this.value = '';">
             </div>
             <div style="margin-top:30px">
