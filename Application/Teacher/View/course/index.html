@@ -22,11 +22,12 @@
 
     <!-- DataTables Responsive CSS -->
   <!--   <link href="__PUB__/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
-
+    <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
        <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
-    <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
     <script src="__PUB__/sm/sm.js"></script>
     <!-- Custom Fonts -->
    <!--  <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -82,7 +83,7 @@
                                             <td>{:date('n-j H:i D',$value['start_time'])}</td>
                                             <td>{$value['title']}</td>
                                             <td>{$value['type']}</td>
-                                            <td class="center"><a href="{:U('Teacher/taskdetail/index',array('id'=>$value['id'],'course'=>$now_course))}"><button type="button" class="btn btn-outline btn-success">点击查看</button></a></td>
+                                            <td class="center"><a href="{:U('Teacher/taskdetail/index',array('id'=>$value['id'],'course'=>$now_course,'title'=>$value['title']))}"><button type="button" class="btn btn-outline btn-success">点击查看</button></a></td>
                                             <td class="center">{$value['total_number']}</td>
                                             <td>{$value['complete_number']}</td>
                                             <td><a href="{:U('Teacher/Course/send_work',array('modify'=>1,'task_id'=>$value['id'],'course'=>$value['course']))}"> <button type="button" class="btn btn-outline btn-info">修改</button></a></td>

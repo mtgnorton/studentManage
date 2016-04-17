@@ -18,25 +18,14 @@
     <script src="/studentMange/Public/sm/sm.js"></script>
     <!-- MetisMenu CSS -->
     <link href="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
+    <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- DataTables CSS -->
     <link href="/studentMange/Public/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-<!--     <link href="/studentMange/Public/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
- -->
-    <!-- Custom CSS -->
+
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-<!--     <link href="/studentMange/Public/startbootstrap/ /font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -59,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">学习助手</a>
+                <a class="navbar-brand" href="<?php echo U('Teacher/index/index');?>">学习助手</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -70,6 +59,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
@@ -94,6 +84,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -125,10 +116,14 @@
                             <!-- /input-group -->
                         </li>
                    <?php if(is_array($course)): $key = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><li>
-                            <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                    
+
+                            <a class="sssss" href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                          
                             <ul class="nav nav-second-level">
+
                                <li>
-                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
+                                    <a  href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
                                 </li>
                                   <li>
                                   <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
@@ -158,10 +153,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                   <div class="huge"><?php echo ($value["class"]); ?></div>
+                                   <div class="huge"></div>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"></div>
+                                    <div class="huge"><?php echo ($value["class"]); ?></div>
                                     <div>New Tasks!</div>
                                 </div>
                             </div>
@@ -184,7 +179,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          课程：<?php echo ($now_course); ?>   班级：<?php echo ($now_class); ?> 共<?php echo ($number); ?>人
+                          课程：<?php echo ($now_course); ?>   班级：<?php echo ($now_class); ?> 共<?php echo ($number); ?>人 
+                          <div style="float:right;">最近一次作业标题:<?php echo ($task_title); ?></div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -193,23 +189,25 @@
                                     <thead>
                                         <tr>
                                         <th><span class="label label-warning">姓名</span></th>
-                                     <th><span class="label label-warning">作业情况</span></th>
+                                     <th><span class="label label-warning">最近一次作业情况</span></th>
                                      <th><span class="label label-warning">查看作业</span></th>
-                                    <th><span class="label label-warning">提问情况</span></th>
+                                    <th><span class="label label-warning">成绩查看</span></th>
                                   
                                         </tr>
                                     </thead>
                                     <tbody>
                                       <?php if(is_array($now_class_student)): $key = 0; $__LIST__ = $now_class_student;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><tr class="odd gradeX">
                                       
-                                        <td><a href="<?php echo U('Index/teacher_course',array('cname'=>$value));?>">
+                                        <td><a href="<?php echo U('Teacher/studenttask/index',array('sid'=>$value['0'],'course'=>$now_course));?>">
                                         <?php echo ($value[1]); ?>
                                         </a>
                                         </td>
-                                           
-                                            <td>上次：已提交->更多</td>
-                                            <td>查看</td>
-                                           <td>无</td>
+                                           <?php if($value[2] == 0): ?><td> 未提交        </td>
+                                            <td>无法查看</td>
+                                            <?php else: ?>
+                                            <td><font color="red">已提交</font>  </td>
+                                           <td><font color="red"><a href="<?php echo U('Teacher/viewtask/index',array('stask_id'=>$value['stask_id'],'course'=>$now_course,'path'=>1));?>"><button type="button" class="btn btn-outline btn-warning">点击查看</button></a></font></font></td><?php endif; ?>
+                                       <td><a href="<?php echo U('Teacher/scoreview/index',array('sid'=>$value['0'],'course'=>$now_course));?>"><button type="button" class="btn btn-outline btn-warning">查看</button></a></td>
                                         </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                                    
                                     </tbody>

@@ -22,7 +22,7 @@
     <!-- Custom CSS -->
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
-
+    <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core JavaScript -->
     <script src="/studentMange/Public/startbootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -32,11 +32,13 @@
     <!-- Custom Theme JavaScript -->
     <script src="/studentMange/Public/startbootstrap/dist/js/sb-admin-2.js"></script>
   
-    <script  type="text/javascript">
-
-   
     
-    </script>
+   
+<!-- 
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/input_beautify/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/input_beautify/css/component.css" /> 
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/input_beautify/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/input_beautify/fonts/font-awesome-4.2.0/css/font-awesome.min.css" /> -->
 
 </head>
 <body>
@@ -57,7 +59,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">学习助手</a>
+                <a class="navbar-brand" href="<?php echo U('Teacher/index/index');?>">学习助手</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -68,6 +70,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
@@ -92,6 +95,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -123,10 +127,14 @@
                             <!-- /input-group -->
                         </li>
                    <?php if(is_array($course)): $key = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><li>
-                            <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                    
+
+                            <a class="sssss" href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                          
                             <ul class="nav nav-second-level">
+
                                <li>
-                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
+                                    <a  href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
                                 </li>
                                   <li>
                                   <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
@@ -154,43 +162,65 @@
            <div style="">
 <!-- <button name="fanhui"  onclick="fanhui()">返回上一页</button> -->
 </div>
-   <div class="alert alert-warning" style="padding-bottom: 30px">
-                                <h3 align="center">   <?php echo ($now_course); ?>-<?php echo ($task_data["sname"]); ?></h3>
-                                <button style="float: right;">下一个学生</button>
+   <div class="alert alert-warning" style="padding-bottom: 4%">
+
+                                <h3 align="center">   <?php echo ($now_course); ?>- 姓名：<span id='task_sname'> <?php echo ($task_data["sname"]); ?></span> 班级：<span id='task_class'><?php echo ($task_data["class"]); ?></span></h3>
+                                <?php if($path == 1): ?><a href="<?php echo U('Teacher/class/index',array('course'=>$now_course));?>"><button type="button" class="btn btn-warning" style="float:left;">返回上一页</button></a>
+                                <?php else: ?>
+                                <a href="<?php echo U('Teacher/taskdetail/index',array('id'=>$task_data['task_id'],'course'=>$now_course));?>"><button type="button" class="btn btn-warning" style="float:left;">返回上一页</button></a><?php endif; ?>
+                                <button type="button" class="btn btn-danger"onclick="next_task5(<?php echo ($task_data["task_id"]); ?>)" style="float: right;">下一个学生</button>
+
+                
                             </div>
 
 
-
+<input type="hidden" id="next_student_task" value="<?php echo U('Teacher/viewtask/next_student_task');?>">
 
 <div class="panel panel-danger">
    <div class="panel-heading">
       <h3 class="panel-title">
-         <strong>作业标题:</strong> <?php echo ($task_data['title']); ?> <span style="float: right;"> <strong>提交时间：</strong><?php echo date('n-j H:i 周L',$task_data['submit_time']);?></span>
+         <strong>作业标题:</strong><span id='task_title'> <?php echo ($task_data['title']); ?></span> 
+         <span style="float: right;"> <strong>提交时间：</strong>
+         <span id='task_submit_time'><?php echo date('n-j H:i 周L',$task_data['submit_time']);?>
+         </span>
+       </span>
    </div>
-   <div class="panel-body">
+   <div class="panel-body" id="task_content">
      <?php echo ($task_data['content']); ?>
    </div>
 </div>
 
 
-
 <input type="hidden" name="modify_content" id="modify_content" value="<?php echo ($s_task_data['content']); ?>">
 <input type="hidden" id="send_task" value="<?php echo U('Student/task/send_task',array('task_id'=>$task_data['id'],'task_type'=>$task_data['type']));?>">
 
-<div class="form-group" align="center">
+<?php if($modify == 0): ?><div class="form-group" align="center">
  <label>请将您的批改情况填在下框</label>
- <textarea class="form-control" rows="3" style="width: 30%">已批改</textarea>
+ <textarea class="form-control" rows="3" id="mark" style="width: 30%">已批改</textarea>
  <div class="form-group has-error">
  <label class="control-label" for="inputError">请输入成绩</label>
-<input type="text" class="form-control" id="inputError" style="width: 30%">
+<input type="text" class="form-control" id="score" style="width: 30%">
   </div>
 </div>
-<div align="center">
-   <?php if($modify == 1): ?><button name="send" onclick="send_task(<?php echo ($s_task_data['id']); ?>)">提交</button>
-    <?php else: ?>
-    <button name="send" onclick="send_task()">提交</button><?php endif; ?>
-</div>
+<?php else: ?>
 
+<div class="form-group" align="center">
+ <label>您的批改内容</label>
+ <textarea class="form-control" rows="3" id="mark" style="width: 30%"><?php echo ($task_data['mark_reply']); ?></textarea>
+ <div class="form-group has-error">
+ <label class="control-label" for="inputError">您的批改成绩</label>
+<input type="text" class="form-control" id="score" style="width: 30%" value="<?php echo ($task_data['score']); ?>">
+  </div>
+</div><?php endif; ?>
+<input type="hidden" id="s_task_id" value="<?php echo ($task_data['id']); ?>">
+
+
+<div align="center">
+  
+    <button name="send" onclick="mark_task()">提交</button>
+
+</div>
+ <input type="hidden" id="mark_task" value="<?php echo U('Teacher/viewtask/mark_task');?>">
 
 
 </body>

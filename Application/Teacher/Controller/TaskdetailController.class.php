@@ -45,10 +45,17 @@ class TaskdetailController extends Controller
 		 *sm_stask和sm_student联合查询获得学生表的班级。
 		 *
 		 */
-		$sql 	=	"select a.*,b.class from sm_stask a inner join sm_student b on a.sid = b.sid where a.task_id = $id";
+		$sql 	=	"select a.*,b.class from sm_stask a inner join sm_student b on a.sid = b.sid where a.task_id = $id order by b.class , b.sid";
 		$task_data 	= $staskModel->query($sql);
 		$this->assign('task_data',$task_data);
 
+		/*
+		 *此处的作用是：
+		 *传递作业标题
+		 *
+		 */
+		$task_title 	= I('get.title');
+		$this->assign('task_title',$task_title);
 	
 		$this->display();
 	}

@@ -20,7 +20,7 @@
 
     <!-- MetisMenu CSS -->
     <link href="__PUB__/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
+  <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -58,7 +58,10 @@
 <!-- <button name="fanhui"  onclick="fanhui()">返回上一页</button> -->
 </div>
    <div class="alert alert-warning">
+   <div style="margin-top: 20px">
+    <a href="{:U('Student/Course/index',array('course'=>$course,'tname'=>$tname))}"><button type="button" class="btn btn-warning" style="float:left;">返回上一页</button></a></div>
                                 <h3 align="center">   {$course}</h3>
+
                             </div>
 
 
@@ -79,18 +82,22 @@
 <!--style给定宽度可以影响编辑器的最终宽度-->
 <script type="text/plain" id="myEditor" style="width:1000px;height:240px">
    
-    <p id="default_c">将您要完成的作业写在这里</p>
+    <p id="default_c" onclick="clear_content('student')">将您要完成的作业写在这里</p>
 
 </script>
 <input type="hidden" name="modify_content" id="modify_content" value="{$s_task_data['content']}">
 <input type="hidden" id="send_task" value="{:U('Student/task/send_task',array('task_id'=>$task_data['id'],'task_type'=>$task_data['type']))}">
 <div align="center">
-   <if condition="$modify eq 1">
+<if condition="$is_mark eq 1">
+  <button name="send" onclick="sweetAlert('您已完成该作业','','error');">提交</button>
+  <else />
+   <if condition="$modify eq 1 ">
 
     <button name="send" onclick="send_task({$s_task_data['id']})">提交</button>
     <else />
     <button name="send" onclick="send_task()">提交</button>
     </if>
+  </if>
 </div>
 <div class="clear"></div>
                 <!-- /.row -->

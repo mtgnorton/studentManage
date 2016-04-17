@@ -51,7 +51,7 @@ class TempController extends Controller
 		$length=5;
     // 密码字符集，可任意添加你需要的字符
     $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
+    
     $password = '';
     for ( $i = 0; $i < $length; $i++ ) 
     {

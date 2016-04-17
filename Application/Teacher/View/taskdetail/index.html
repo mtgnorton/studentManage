@@ -19,15 +19,19 @@
 
     <!-- DataTables CSS -->
     <link href="__PUB__/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+        <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables Responsive CSS -->
  <!--    <link href="__PUB__/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
 
     <!-- Custom CSS -->
     <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+    
      <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+
        <script src="__PUB__/sm/sm.js"></script>
+
     <!-- Custom Fonts -->
 <!--     <link href="__PUB__/startbootstrap/ /font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
  -->
@@ -57,8 +61,9 @@
                         <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                         {$now_course}->作业详情
+                        <div class="panel-heading" align="">
+                        <font size="4">
+                         {$now_course}->作业详情->{$task_title}</font>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -81,11 +86,15 @@
                                             <td> <font size="4">{:date('n-j H:i D',$value['submit_time'])} </font></td>
                                              <td> <font size="4">{$value['sname']}</font></td>
                                              <td><font size="4"> {$value['class']}</font> </td>
-                                             <td><font size="4"> <a href="{:U('Teacher/viewtask/index',array('stask_id'=>$value['id'],'course'=>$now_course))}">点击查看</a></font></td>
+                                           
+                                             <td><font size="4"> <a href="{:U('Teacher/viewtask/index',array('stask_id'=>$value['id'],'course'=>$now_course))}"><button type="button" class="btn btn-outline btn-warning">点击查看</button></a></font></td>
+                                        
+
+                                             </if>
                                              <if condition="$value['is_mark'] eq 0">
                                              <td> <font size="4">未批改 </font></td>
                                              <else />
-                                            <td> <font size="4">已修改 </font></td>
+                                            <td> <font size="4">已修改-成绩:{$value['score']} </font></td>
                                           </if>
          
                                               </tr>

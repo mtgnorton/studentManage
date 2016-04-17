@@ -20,7 +20,7 @@
 
     <!-- MetisMenu CSS -->
     <link href="/studentMange/Public/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
+  <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -61,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">学习助手</a>
+                <a class="navbar-brand" href="<?php echo U('Student/index/index');?>">学习助手</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -115,15 +115,9 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
+                        <li class="sidebar-search" style="min-height: 90px">
+                        <span>欢迎您<?php echo ($name); ?></span>
+                            <div style="float: right; " ><img src="<?php echo ($photo_head); ?>"  width="70" height="70" alt=""></div>
                             <!-- /input-group -->
                         </li>
                   <?php if(is_array($course_task_data)): $i = 0; $__LIST__ = $course_task_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($i % 2 );++$i;?><li>
@@ -131,7 +125,11 @@
                             <ul class="nav nav-second-level">
                               
                                   <li>
-                                    <a href="<?php echo U('Student/Course/index',array('course'=>$value['course'],'tname'=>$value['tname']));?>">展开详情</a>
+                                    <a href="<?php echo U('Student/Course/index',array('course'=>$value['course'],'tname'=>$value['tname']));?>">
+                                    查看近期作业</a>
+                               <li>
+                                  <a href="javascript:void(0)" onclick="view_announce('<?php echo ($value["course"]); ?>','<?php echo ($value["tname"]); ?>');return false">查看公告</a>
+                                </li>
                                 </li>
                            
                             </ul>
@@ -143,6 +141,7 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        <input type="hidden" id="view_announcement" value="<?php echo U('Student/index/view_announcement');?>">
 
         <!-- Page Content -->
         <div id="page-wrapper" style="">
@@ -151,7 +150,10 @@
 <!-- <button name="fanhui"  onclick="fanhui()">返回上一页</button> -->
 </div>
    <div class="alert alert-warning">
+   <div style="margin-top: 20px">
+    <a href="<?php echo U('Student/Course/index',array('course'=>$course,'tname'=>$tname));?>"><button type="button" class="btn btn-warning" style="float:left;">返回上一页</button></a></div>
                                 <h3 align="center">   <?php echo ($course); ?></h3>
+
                             </div>
 
 
@@ -172,15 +174,17 @@
 <!--style给定宽度可以影响编辑器的最终宽度-->
 <script type="text/plain" id="myEditor" style="width:1000px;height:240px">
    
-    <p id="default_c">将您要完成的作业写在这里</p>
+    <p id="default_c" onclick="clear_content('student')">将您要完成的作业写在这里</p>
 
 </script>
 <input type="hidden" name="modify_content" id="modify_content" value="<?php echo ($s_task_data['content']); ?>">
 <input type="hidden" id="send_task" value="<?php echo U('Student/task/send_task',array('task_id'=>$task_data['id'],'task_type'=>$task_data['type']));?>">
 <div align="center">
-   <?php if($modify == 1): ?><button name="send" onclick="send_task(<?php echo ($s_task_data['id']); ?>)">提交</button>
+<?php if($is_mark == 1): ?><button name="send" onclick="sweetAlert('您已完成该作业','','error');">提交</button>
+  <?php else: ?>
+   <?php if($modify == 1 ): ?><button name="send" onclick="send_task(<?php echo ($s_task_data['id']); ?>)">提交</button>
     <?php else: ?>
-    <button name="send" onclick="send_task()">提交</button><?php endif; ?>
+    <button name="send" onclick="send_task()">提交</button><?php endif; endif; ?>
 </div>
 <div class="clear"></div>
                 <!-- /.row -->

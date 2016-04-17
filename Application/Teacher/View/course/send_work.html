@@ -107,7 +107,7 @@ id="title" class="form-control"  value="" style="width: 400px">
 <!--style给定宽度可以影响编辑器的最终宽度-->
 <script type="text/plain" id="myEditor" style="width:1000px;height:240px">
    
-    <p id="old_content">将您要布置的作业写在这里</p>
+    <p id="old_content" onclick="clear_content('teacher')">将您要布置的作业写在这里</p>
 
 </script>
 <input type="hidden" name="modify_content" id="modify_content" value="{$task_data['content']}">
@@ -139,6 +139,8 @@ id="title" class="form-control"  value="" style="width: 400px">
     um.addListener('focus',function(){
         $('#focush2').html('')
     });
+  
+    
       var modify         = {$modify};
       var modify_content = $('#modify_content').val();
       var btn            = document.getElementById('btn');

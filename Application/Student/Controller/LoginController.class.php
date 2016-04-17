@@ -15,6 +15,7 @@ class LoginController extends Controller
 
     public function index()
     {
+  
         $this->display();
     }
     public function verify() {
@@ -85,9 +86,9 @@ class LoginController extends Controller
 	  	  *
 	  	  */
 	  	if ($student_info['status'] == 1 ) {
-
-	    	 $insert_per_data['sid']	 = $sid;
-	    	 $insert_per_data['password'] =crypt($password,$sid);
+	  		 $student_info['perinfo']['photo']          =  GrabImage($student_info['perinfo']['photo_add'],$sid,$student_info['perinfo']['class']);
+	    	 $insert_per_data['sid']	 				 = $sid;
+	    	 $insert_per_data['password']				 =crypt($password,$sid);
 
 	    	 $insert_per_data['sname']	= $student_info['name'];
 	    	 $insert_per_data['depart']	= $student_info['perinfo']['depart'];
@@ -97,27 +98,14 @@ class LoginController extends Controller
 	    	 $insert_per_data['photo'] 	= $student_info['perinfo']['photo'];
 	    	 $is_suc 					= $studentModel -> add($insert_per_data);
 	    	 $temp_judge 				= 0;
-
-
-	    	 foreach ($student_info['courseinfo'] as $key => $value) {
-
-	    	 $insert_course_data['cname']	=	$key;
-	    	 $insert_course_data['tname']	= 	$value;
-	    	 $insert_course_data['sid'] 	= 	$sid;
-	    	 $temp 	=   $student_course_Model->add($insert_course_data);
-	    	 if ($temp) {
-	    	 	$temp_judge++;
-	    	 }
-	    	 }
-
 	  
 	    	
-	    	 if ($is_suc and count($student_info['courseinfo']) == $temp_judge ) {
-		
+	    	 if ($is_suc ) {
+			
 	    	 session(array('name'=>'session_id','expire'=>3600));
 	    	 session('sid',		$sid );
 	    	 session('sname',	$student_info['name']);
-	    	 session('s_course',$student_info['courseinfo']);
+	    	 session('temp_course',$student_info['courseinfo']);
 	    	 $response['msg']	= '用户登录成功';
 			 $response['flag']	= 1;
 			 return $response;
@@ -139,17 +127,17 @@ class LoginController extends Controller
 	  		 *当数据库中有此学生的数据时，直接写入session，登录成功
 	  		 *
 	  		 */
+
 	  		$password_database				= $studentModel->where("sid=$sid")->getField('password');
 	  		if (crypt($password,$sid) == $password_database) {
 	  			
 	  		$course_tea_data 	= $student_course_Model->where("sid=$sid")->getField('cname,tname');
-	  		
+	  		$student_info 				= R('Spider/transfer',array($sid,$password));
 	  		session(array('name'=>'session_id','expire'=>3600));
 	  		session('sid'	, $sid);
 	  		session('sname'	, $sname);
+	  		session('temp_course',$student_info['courseinfo']);
 	  		session('s_course', $course_tea_data);
-	  		// $this->redirect('Index/index_student','登录成功');
-	  // 		$this->success('登录成功', 'Index/index');
 	  		$response['msg']	= '用户登录成功';
 			$response['flag']	= 1;
 			return $response;

@@ -57,17 +57,22 @@ class CourseController extends Controller {
     	 *时，传递该id
     	 */
     	foreach ($task_data as $key => $value) {
+
     	$tid 			 = $value['id'];
-    	$id 			 = $staskModel->where("sid=$sid AND task_id=$tid")->getField('id');
+    	$stask_data 			 = $staskModel->where("sid=$sid AND task_id=$tid")->getField('id,is_mark,mark_reply,score');
+      
     	$task_data[$key]['color'] 	  = $color[$i];
     	$i++;
     	if ($i 	== 4 ) {
     		$i=0;
     	}
 
-    	if ($id) {
-
-    	$task_data[$key]['is_finish'] = 1;
+    	if ($stask_data) {
+        list($id,$other_data)   = each($stask_data);
+        $task_data[$key]['is_mark']     = $other_data['is_mark'];
+        $task_data[$key]['mark_reply']  = $other_data['mark_reply'];
+        $task_data[$key]['score']       = $other_data['score'];
+    	$task_data[$key]['is_finish']   = 1;
 
     	}
 
@@ -78,6 +83,15 @@ class CourseController extends Controller {
     	}
     	$task_data[$key]['s_task_id'] = $id;
     	}
+        /*
+         *此处的作用是：
+         *输出照片
+         *
+         */
+        $sid                = session('sid');
+        $studentModel       = M('student');
+        $photo_head         = $studentModel->where("sid=$sid")->getField('photo');
+        $this->assign('photo_head',__ROOT__.$photo_head);
 
     	$this->assign('name',session('sname')."同学");
     	$this->assign('task_data',$task_data);

@@ -20,21 +20,17 @@
     <!-- DataTables CSS -->
     <link href="__PUB__/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-  <!--   <link href="__PUB__/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
+
 
     <!-- Custom CSS -->
     <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="__PUB__/sweetalert-master/dist/sweetalert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="__PUB__/sweetalert-master/dist/sweetalert.css">
+         <script src="__PUB__/sm/sm.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 <script type="text/javascript">
       
 </script>
@@ -70,7 +66,8 @@
                                      <th><span class="label label-info">作业标题(点击查看作业)</span></th>
                                      <th><span class="label label-info">作业类型</span></th>
                                     <th><span class="label label-info">是否已完成</span></th>
-                                     <th><span class="label label-info">老师回复</span></th>
+                                     <th><span class="label label-info">是否已批改</span></th>
+                                     <th><span class="label label-info">查看回复</span></th>
                                      <th><span class="label label-info">成绩</span></th>
                                    
                                         </tr>
@@ -79,15 +76,29 @@
                                   <volist name="task_data" id="value" >
                                         <tr class="odd gradeX">
                                             <td>{:date('n-j H:i D',$value['start_time'])}</td>
-                                           <td> <a href="{:U('Student/task/index',array('task_id'=>$value['id'],'course'=>$course))}">{$value['title']}</a></td>
+                                           <td> <a href="{:U('Student/task/index',array('task_id'=>$value['id'],'course'=>$course,'is_mark'=>$value['is_mark']))}">{$value['title']}</a></td>
                                             <td>{$value['type']}</td>
                                          <if condition="$value['is_finish'] eq 1">
-                                         <td> <a href="{:U('Student/task/index',array('s_task_id'=>$value['s_task_id'],'task_id'=>$value['id'],'course'=>$course))}">已完成-点击修改</a></td>
+
+                                         <if condition="$value['is_mark'] eq 1">
+                                         <td>以批改-不可修改</td>
+                                         <else />
+                                         <td> <a href="{:U('Student/task/index',array('s_task_id'=>$value['s_task_id'],'task_id'=>$value['id'],'course'=>$course))}"><button type="button" class="btn btn-outline btn-info">已完成-点击修改</button></a></td>
+                                     </if>
                                         <else />
                                          <td>未完成</td>
                                         </if>
-                                         <td>查看</td>
-                                         <td>查看</td>
+
+                                        <if condition="$value['is_mark'] eq 1">
+
+                                         <td><font color="red">已批改</font></td>
+                                         <td><button type="button" class="btn btn-outline btn-success" onclick="swal('{$value['mark_reply']}')">查看回复</button></td>
+                                         <td>{$value['score']}</td>
+                                         <else />
+                                         <td>未批改</td>
+                                         <td>未批改</td>
+                                         <td>未批改</td>
+                                     </if>
                                         </tr>
                                       
                                     </volist>

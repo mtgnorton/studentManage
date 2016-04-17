@@ -1,10 +1,17 @@
 <?php 
 
 
-function GrabImage($url,$filename="") { 
-	$filename='./Public/photo_img/'.$filename.'.jpg';
+function GrabImage($url,$filename="",$class) { 
+	$class 	= iconv('utf-8', 'gb2312', $class);
+	if (is_dir('./Public/photo_head/'.$class)) {
+		
+	}
+	else{
+		mkdir('./Public/photo_head/'.$class);
+	}
+	$filename='./Public/photo_head/'.$class.'/'.$filename.'.jpg';
 	if (file_exists($filename)) {
-
+		$filename 	= iconv('gb2312', 'utf-8', $filename);
 		return $filename;
 	}
 	if($url=="") return false; 
@@ -24,7 +31,7 @@ function GrabImage($url,$filename="") {
 	$fp2=@fopen($filename, "a"); 
 	fwrite($fp2,$img); 
 	fclose($fp2); 
-
+	$filename 	= iconv('gb2312', 'utf-8', $filename);
 	return $filename; 
 } 
 		

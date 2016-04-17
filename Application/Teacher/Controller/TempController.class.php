@@ -40,6 +40,21 @@ class TempController extends Controller
 
 
 	}
+	public function test3($value='')
+	{
+		$student_course_Model 	= M('student_course');
+		$data 	= $student_course_Model->where("cname='UNIX程序设计'")->select();
+		$staskModel 			= M('stask');
+		foreach ($data as $key => $value) {
+		$insert_data['content'] = htmlspecialchars($this->test1().'马廷光');
+		$insert_data['sid'] 	= $value['sid'];
+		$insert_data['task_id'] = 16;
+		$insert_data['sname'] 	= $value['sid'];
+		$insert_data['submit_time']=time();
+		$insert_data['type'] 	= '课后';
+		$staskModel->add($insert_data);
+		}
+	}
 	public function test($value='')
 	{
 		$result=rand(1000000000,9999999999);
@@ -48,7 +63,7 @@ class TempController extends Controller
 	public function test1($value='')
 	{
 		
-		$length=5;
+		$length=10;
     // 密码字符集，可任意添加你需要的字符
     $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 

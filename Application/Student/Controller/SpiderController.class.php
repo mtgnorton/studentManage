@@ -7,7 +7,7 @@ class SpiderController extends Controller {
      public  $sid       =   '1208010126';
      public $password   =   '522629199412101618';
      public $identity   =   '学生';
-
+     
     /*
      *此处的作用是：
      *获得url中的随即参数和__VIEWSTATE
@@ -189,8 +189,8 @@ class SpiderController extends Controller {
      $info['class']           =    $temp_info[1];
      // preg_match('/id=\"xszp\" src=\"(.*?)\" /',  $result, $temp_info);
      // $info['photo']           =    $temp_info[1];
-     $photo_add               = 'http://211.87.155.19/('.$temp[1].')/readimagexs.aspx?xh='.$this->sid;
-     $info['photo']           =  GrabImage($photo_add,$this->sid);
+     $info['photo_add']      = 'http://211.87.155.19/('.$temp[1].')/readimagexs.aspx?xh='.$this->sid;
+    
      if (empty($info)) {
          return array(
             'status'    => "0",

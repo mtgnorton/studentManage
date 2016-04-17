@@ -19,7 +19,7 @@ class TaskController extends Controller {
         }
         $this->assign('name',session('sname')."同学");
         $this->assign('course',$course);
-
+        $now_course     = $course;
         
         /*
          *此处的作用是：
@@ -61,7 +61,15 @@ class TaskController extends Controller {
         }
     	$task_data 				    = 	get_task_info($task_id,'',1);
     	$task_data[0]['content'] 	= 	htmlspecialchars_decode($task_data[0]['content']);
-
+        /*
+         *此处的作用是：
+         *输出照片
+         *
+         */
+        $sid                = session('sid');
+        $studentModel       = M('student');
+        $photo_head         = $studentModel->where("sid=$sid")->getField('photo');
+        $this->assign('photo_head',__ROOT__.$photo_head);
     	
         /*
          *此处的作用是：
@@ -70,7 +78,13 @@ class TaskController extends Controller {
          */
         $this->assign('name',session('sname')."同学");
     	$this->assign('task_data',$task_data[0]);
-    
+        $is_mark                    = I('get.is_mark');
+        $this->assign('is_mark',$is_mark);
+        #获得老师姓名
+        $student_course_Model       = M("student_course");
+        $tname                      = $student_course_Model->where("sid=$sid AND cname='$now_course'")->getField('tname');
+        $this->assign('tname',$tname);
+       
     	$this->display();
     	
     }
@@ -94,9 +108,15 @@ class TaskController extends Controller {
         }
         else{
         $response['flag']    = 0;
-        $response['msg']     = '作业修改失败';
+        $response['msg']     = '您还未修改，请不要重复提交';
         $this->ajaxReturn($response,0);
         }
+        }
+        $sid                 = session('sid');
+        if ($staskModel->where("sid=$sid AND task_id=$task_id")->getField('id')) {
+        $response['flag']    = 0;
+        $response['msg']     = '请不要重复提交,如果您想修改,请回到上一页面,点击修改';
+        $this->ajaxReturn($response,0);
         }
         $insert_stask_data['content']       = I('post.content');
         $insert_stask_data['sid']           = session('sid');
@@ -106,10 +126,16 @@ class TaskController extends Controller {
         $insert_stask_data['is_mark']       = 0;
         $insert_stask_data['type']          = $task_type;
         $is_suc                             = $staskModel->add($insert_stask_data);
+
+        if ($is_suc) {
+        #此处是将作业的完成人数加1
+        $ttaskModel          = M('ttask');
+        $is_suc              = $ttaskModel ->where("id=$task_id")->setInc('complete_number');
         if ($is_suc) {
         $response['flag']    = 1;
         $response['msg']     = '作业提交成功';
         $this->ajaxReturn($response,0);
+        }
         }
         else{
         $response['flag']    = 0;

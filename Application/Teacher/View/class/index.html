@@ -18,25 +18,14 @@
     <script src="__PUB__/sm/sm.js"></script>
     <!-- MetisMenu CSS -->
     <link href="__PUB__/startbootstrap/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
+    <link href="__PUB__/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- DataTables CSS -->
     <link href="__PUB__/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-<!--     <link href="__PUB__/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
- -->
-    <!-- Custom CSS -->
+
     <link href="__PUB__/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-<!--     <link href="__PUB__/startbootstrap/ /font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -58,10 +47,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                   <div class="huge">{$value.class}</div>
+                                   <div class="huge"></div>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"></div>
+                                    <div class="huge">{$value.class}</div>
                                     <div>New Tasks!</div>
                                 </div>
                             </div>
@@ -85,7 +74,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          课程：{$now_course}   班级：{$now_class} 共{$number}人
+                          课程：{$now_course}   班级：{$now_class} 共{$number}人 
+                          <div style="float:right;">最近一次作业标题:{$task_title}</div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -94,9 +84,9 @@
                                     <thead>
                                         <tr>
                                         <th><span class="label label-warning">姓名</span></th>
-                                     <th><span class="label label-warning">作业情况</span></th>
+                                     <th><span class="label label-warning">最近一次作业情况</span></th>
                                      <th><span class="label label-warning">查看作业</span></th>
-                                    <th><span class="label label-warning">提问情况</span></th>
+                                    <th><span class="label label-warning">成绩查看</span></th>
                                   
                                         </tr>
                                     </thead>
@@ -104,14 +94,18 @@
                                       <volist name="now_class_student" id="value" key="key" >
                                         <tr class="odd gradeX">
                                       
-                                        <td><a href="{:U('Index/teacher_course',array('cname'=>$value))}">
+                                        <td><a href="{:U('Teacher/studenttask/index',array('sid'=>$value['0'],'course'=>$now_course))}">
                                         {$value[1]}
                                         </a>
                                         </td>
-                                           
-                                            <td>上次：已提交->更多</td>
-                                            <td>查看</td>
-                                           <td>无</td>
+                                           <if condition="$value[2] eq 0">
+                                            <td> 未提交        </td>
+                                            <td>无法查看</td>
+                                            <else />
+                                            <td><font color="red">已提交</font>  </td>
+                                           <td><font color="red"><a href="{:U('Teacher/viewtask/index',array('stask_id'=>$value['stask_id'],'course'=>$now_course,'path'=>1))}"><button type="button" class="btn btn-outline btn-warning">点击查看</button></a></font></font></td>
+                                       </if>
+                                       <td><a href="{:U('Teacher/scoreview/index',array('sid'=>$value['0'],'course'=>$now_course))}"><button type="button" class="btn btn-outline btn-warning">查看</button></a></td>
                                         </tr>
                                       
                                     </volist>

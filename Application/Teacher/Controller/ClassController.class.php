@@ -21,11 +21,11 @@ class ClassController extends Controller
 	
 	public function index($course='',$tran_class='')
 	{
-	/*
-	 *此处的作用是：
-	 *当点击首页的班级后，显示对应课程下班级的学生
-	 *
-	 */
+		/*
+		 *此处的作用是：
+		 *当点击首页的班级后，显示对应课程下班级的学生
+		 *
+		 */
 
 	if ( empty(session('tid'))) {
 			$this->error('请先登录',U('Student/login/index'),3);
@@ -88,8 +88,36 @@ class ClassController extends Controller
 		}
 		$now_class_student_number 	= count($now_class_student);
 		$this->assign('number' , $now_class_student_number);
-		$this->assign('now_class_student', $now_class_student);
+		
 
+		/*
+		 *此处的作用是：
+		 *先在ttask表中查到当前课程和当前老师下最近的一次作业id，然后根据此id和学生的sid来
+		 *查找stask表中学生是否完成了此课程下最近的一次作业
+		 */
+		$ttaskModel 				= M('ttask');
+		$tname 						= session('tname');
+		$sql 						= "select id,title from sm_ttask where course='$course' and tname='$tname' order by start_time desc limit 1";
+		$recent_data				= $ttaskModel->query($sql);
+
+		$recent_id 					= $recent_data['0']['id'];
+		$this->assign('task_title', $recent_data['0']['title']);#获得最后一次作业的标题
+		$staskModel 				= M('stask');
+
+		foreach ($now_class_student as $key => $value) {
+		$temp 						= $value['0'];
+		$is_suc 					= $staskModel->where("sid=$temp AND task_id=$recent_id")->getField('id');
+		if ($is_suc) {
+			$now_class_student[$key]['stask_id'] 	= $is_suc;
+			$now_class_student[$key][]	 			= 1;
+		}
+		else{
+			$now_class_student[$key]['stask_id'] 	= 0;
+			$now_class_student[$key][]	 			= 0;
+		}
+		}
+		
+		$this->assign('now_class_student', $now_class_student);
 		$this->assign('now_course',$course);
 		$this->display();
 	

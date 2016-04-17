@@ -19,15 +19,19 @@
 
     <!-- DataTables CSS -->
     <link href="/studentMange/Public/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+        <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables Responsive CSS -->
  <!--    <link href="/studentMange/Public/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
 
     <!-- Custom CSS -->
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+    
      <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
+
        <script src="/studentMange/Public/sm/sm.js"></script>
+
     <!-- Custom Fonts -->
 <!--     <link href="/studentMange/Public/startbootstrap/ /font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
  -->
@@ -59,7 +63,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">学习助手</a>
+                <a class="navbar-brand" href="<?php echo U('Teacher/index/index');?>">学习助手</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -70,6 +74,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
@@ -94,6 +99,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -125,10 +131,14 @@
                             <!-- /input-group -->
                         </li>
                    <?php if(is_array($course)): $key = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><li>
-                            <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                    
+
+                            <a class="sssss" href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                          
                             <ul class="nav nav-second-level">
+
                                <li>
-                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
+                                    <a  href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
                                 </li>
                                   <li>
                                   <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
@@ -158,8 +168,9 @@
                         <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                         <?php echo ($now_course); ?>->作业详情
+                        <div class="panel-heading" align="">
+                        <font size="4">
+                         <?php echo ($now_course); ?>->作业详情-><?php echo ($task_title); ?></font>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -181,10 +192,14 @@
                                             <td> <font size="4"><?php echo date('n-j H:i D',$value['submit_time']);?> </font></td>
                                              <td> <font size="4"><?php echo ($value['sname']); ?></font></td>
                                              <td><font size="4"> <?php echo ($value['class']); ?></font> </td>
-                                             <td><font size="4"> <a href="<?php echo U('Teacher/viewtask/index',array('stask_id'=>$value['id'],'course'=>$now_course));?>">点击查看</a></font></td>
+                                           
+                                             <td><font size="4"> <a href="<?php echo U('Teacher/viewtask/index',array('stask_id'=>$value['id'],'course'=>$now_course));?>"><button type="button" class="btn btn-outline btn-warning">点击查看</button></a></font></td>
+                                        
+
+                                             </if>
                                              <?php if($value['is_mark'] == 0): ?><td> <font size="4">未批改 </font></td>
                                              <?php else: ?>
-                                            <td> <font size="4">已修改 </font></td><?php endif; ?>
+                                            <td> <font size="4">已修改-成绩:<?php echo ($value['score']); ?> </font></td><?php endif; ?>
          
                                               </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                                       

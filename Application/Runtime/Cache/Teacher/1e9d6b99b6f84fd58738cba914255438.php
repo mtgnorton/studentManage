@@ -22,11 +22,12 @@
 
     <!-- DataTables Responsive CSS -->
   <!--   <link href="/studentMange/Public/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
-
+    <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
        <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
-    <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
     <script src="/studentMange/Public/sm/sm.js"></script>
     <!-- Custom Fonts -->
    <!--  <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -60,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">学习助手</a>
+                <a class="navbar-brand" href="<?php echo U('Teacher/index/index');?>">学习助手</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -71,6 +72,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
@@ -95,6 +97,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -126,10 +129,14 @@
                             <!-- /input-group -->
                         </li>
                    <?php if(is_array($course)): $key = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($key % 2 );++$key;?><li>
-                            <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                    
+
+                            <a class="sssss" href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo ($value['course']); ?><span class="fa arrow"></span></a>
+                          
                             <ul class="nav nav-second-level">
+
                                <li>
-                                    <a href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
+                                    <a  href="<?php echo U('Teacher/Course/index',array('course'=>$value['course']));?>">近期作业统计</a>
                                 </li>
                                   <li>
                                   <a href="javascript:void(0)" onclick="send_announce('<?php echo ($value["course"]); ?>');return false">发布公告</a>
@@ -182,7 +189,7 @@
                                             <td><?php echo date('n-j H:i D',$value['start_time']);?></td>
                                             <td><?php echo ($value['title']); ?></td>
                                             <td><?php echo ($value['type']); ?></td>
-                                            <td class="center"><a href="<?php echo U('Teacher/taskdetail/index',array('id'=>$value['id'],'course'=>$now_course));?>"><button type="button" class="btn btn-outline btn-success">点击查看</button></a></td>
+                                            <td class="center"><a href="<?php echo U('Teacher/taskdetail/index',array('id'=>$value['id'],'course'=>$now_course,'title'=>$value['title']));?>"><button type="button" class="btn btn-outline btn-success">点击查看</button></a></td>
                                             <td class="center"><?php echo ($value['total_number']); ?></td>
                                             <td><?php echo ($value['complete_number']); ?></td>
                                             <td><a href="<?php echo U('Teacher/Course/send_work',array('modify'=>1,'task_id'=>$value['id'],'course'=>$value['course']));?>"> <button type="button" class="btn btn-outline btn-info">修改</button></a></td>

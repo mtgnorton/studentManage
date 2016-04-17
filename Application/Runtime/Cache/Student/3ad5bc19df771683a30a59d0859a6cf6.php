@@ -20,21 +20,17 @@
     <!-- DataTables CSS -->
     <link href="/studentMange/Public/startbootstrap/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-  <!--   <link href="/studentMange/Public/startbootstrap/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet"> -->
+
 
     <!-- Custom CSS -->
     <link href="/studentMange/Public/startbootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="/studentMange/Public/startbootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="/studentMange/Public/sweetalert-master/dist/sweetalert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/studentMange/Public/sweetalert-master/dist/sweetalert.css">
+         <script src="/studentMange/Public/sm/sm.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 <script type="text/javascript">
       
 </script>
@@ -59,7 +55,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">学习助手</a>
+                <a class="navbar-brand" href="<?php echo U('Student/index/index');?>">学习助手</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -113,15 +109,9 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
+                        <li class="sidebar-search" style="min-height: 90px">
+                        <span>欢迎您<?php echo ($name); ?></span>
+                            <div style="float: right; " ><img src="<?php echo ($photo_head); ?>"  width="70" height="70" alt=""></div>
                             <!-- /input-group -->
                         </li>
                   <?php if(is_array($course_task_data)): $i = 0; $__LIST__ = $course_task_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($i % 2 );++$i;?><li>
@@ -129,7 +119,11 @@
                             <ul class="nav nav-second-level">
                               
                                   <li>
-                                    <a href="<?php echo U('Student/Course/index',array('course'=>$value['course'],'tname'=>$value['tname']));?>">展开详情</a>
+                                    <a href="<?php echo U('Student/Course/index',array('course'=>$value['course'],'tname'=>$value['tname']));?>">
+                                    查看近期作业</a>
+                               <li>
+                                  <a href="javascript:void(0)" onclick="view_announce('<?php echo ($value["course"]); ?>','<?php echo ($value["tname"]); ?>');return false">查看公告</a>
+                                </li>
                                 </li>
                            
                             </ul>
@@ -141,6 +135,7 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        <input type="hidden" id="view_announcement" value="<?php echo U('Student/index/view_announcement');?>">
 
         <!-- Page Content -->
         <div id="page-wrapper">
@@ -163,7 +158,8 @@
                                      <th><span class="label label-info">作业标题(点击查看作业)</span></th>
                                      <th><span class="label label-info">作业类型</span></th>
                                     <th><span class="label label-info">是否已完成</span></th>
-                                     <th><span class="label label-info">老师回复</span></th>
+                                     <th><span class="label label-info">是否已批改</span></th>
+                                     <th><span class="label label-info">查看回复</span></th>
                                      <th><span class="label label-info">成绩</span></th>
                                    
                                         </tr>
@@ -171,13 +167,21 @@
                                     <tbody>
                                   <?php if(is_array($task_data)): $i = 0; $__LIST__ = $task_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$value): $mod = ($i % 2 );++$i;?><tr class="odd gradeX">
                                             <td><?php echo date('n-j H:i D',$value['start_time']);?></td>
-                                           <td> <a href="<?php echo U('Student/task/index',array('task_id'=>$value['id'],'course'=>$course));?>"><?php echo ($value['title']); ?></a></td>
+                                           <td> <a href="<?php echo U('Student/task/index',array('task_id'=>$value['id'],'course'=>$course,'is_mark'=>$value['is_mark']));?>"><?php echo ($value['title']); ?></a></td>
                                             <td><?php echo ($value['type']); ?></td>
-                                         <?php if($value['is_finish'] == 1): ?><td> <a href="<?php echo U('Student/task/index',array('s_task_id'=>$value['s_task_id'],'task_id'=>$value['id'],'course'=>$course));?>">已完成-点击修改</a></td>
+                                         <?php if($value['is_finish'] == 1): if($value['is_mark'] == 1): ?><td>以批改-不可修改</td>
+                                         <?php else: ?>
+                                         <td> <a href="<?php echo U('Student/task/index',array('s_task_id'=>$value['s_task_id'],'task_id'=>$value['id'],'course'=>$course));?>"><button type="button" class="btn btn-outline btn-info">已完成-点击修改</button></a></td><?php endif; ?>
                                         <?php else: ?>
                                          <td>未完成</td><?php endif; ?>
-                                         <td>查看</td>
-                                         <td>查看</td>
+
+                                        <?php if($value['is_mark'] == 1): ?><td><font color="red">已批改</font></td>
+                                         <td><button type="button" class="btn btn-outline btn-success" onclick="swal('<?php echo ($value['mark_reply']); ?>')">查看回复</button></td>
+                                         <td><?php echo ($value['score']); ?></td>
+                                         <?php else: ?>
+                                         <td>未批改</td>
+                                         <td>未批改</td>
+                                         <td>未批改</td><?php endif; ?>
                                         </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                                    
                                     </tbody>
